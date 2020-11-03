@@ -1,0 +1,31 @@
+version: '3.5'
+networks:
+    banco:
+services:
+    database:
+        container_name: postgres
+        image: postgres:latest
+        env_file: database.conf
+        ports:
+            - 5432:5432  
+        volumes:
+            - db_volume:/var/lib/postgresql
+        networks:
+            - banco
+    api:
+        container_name: api
+        image: python:3.6
+        volumes:
+            # Aplicacao
+            - ./app:/app
+        ports:
+            - 5000:5000
+        working_dir: /app #Diretorio de execucao do comando
+        command: bash ./app.sh #add bash pra dar permissao
+        networks:
+            - banco
+        depends_on:
+            - database #servico de banco de dados
+        env_file: database.conf
+volumes:
+    db_volume:
