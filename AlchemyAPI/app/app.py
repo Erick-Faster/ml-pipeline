@@ -6,8 +6,7 @@ from db import db
 import config
 
 from resources.user import UserRegister, User, UserLogin, UserLogout, TokenRefresh
-from resources.item import Item, ItemList
-from resources.store import Store, StoreList
+from resources.credit import Credit, CreditList
 from datetime import timedelta
 from blacklist import BLACKLIST
 
@@ -92,10 +91,8 @@ def customized_error_handler(error):
     }), error.status_code
 '''
 
-api.add_resource(StoreList, '/stores')
-api.add_resource(Store, '/store')
-api.add_resource(Item, '/item/<string:name>')
-api.add_resource(ItemList, '/items')
+api.add_resource(CreditList, '/credits')
+api.add_resource(Credit, '/credit')
 api.add_resource(UserRegister, '/register')
 api.add_resource(User, '/user/<int:user_id>')
 api.add_resource(UserLogin, '/login')
@@ -103,7 +100,6 @@ api.add_resource(UserLogout, '/logout')
 api.add_resource(TokenRefresh, '/refresh')
 
 if __name__ == '__main__': #evita que, ao importar app, nao execute novamente,
-
     app.app_context().push()
     db.init_app(app)
     db.create_all()
