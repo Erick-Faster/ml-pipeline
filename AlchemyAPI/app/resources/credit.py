@@ -1,5 +1,6 @@
 from flask_restful import Resource, reqparse
 from models.credit import CreditModel
+import pandas as pd
 
 class Credit(Resource):
 
@@ -87,3 +88,21 @@ class Credit(Resource):
 class CreditList(Resource):
     def get(self):
         return {'credits': [credit.json() for credit in CreditModel.find_all()]}
+
+class CreditImport(Resource):
+    def get(self):
+        df = pd.read_csv('dataset.csv')
+        df = df.to_dict('records')
+
+        for data in df:
+            credit = CreditModel(**data)
+            try:
+                credit.save_to_db()
+            except Exception as e:
+                return {
+                    'message': f"An error occured while creating the credit: {e}",
+                    'error_data': f"{data}"
+                }, 500
+
+        return {'message': 'Dataset uploaded'}
+
