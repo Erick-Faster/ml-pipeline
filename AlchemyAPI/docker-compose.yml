@@ -1,6 +1,8 @@
 version: '3.5'
 networks:
     banco:
+    api:
+    training:
 services:
     database:
         container_name: postgres
@@ -24,8 +26,23 @@ services:
         command: bash ./app.sh #add bash pra dar permissao
         networks:
             - banco
+            - training
         depends_on:
             - database #servico de banco de dados
         env_file: database.conf
+    ml:
+        container_name: ml
+        image: python:3.6
+        volumes:
+            # Aplicacao
+            - ./ml:/ml
+        ports:
+            - 6000:6000
+        working_dir: /ml #Diretorio de execucao do comando
+        command: bash ./app.sh #add bash pra dar permissao
+        networks:
+            - training
+        depends_on:
+            - api #servico de banco de dados
 volumes:
     db_volume:

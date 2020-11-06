@@ -64,11 +64,7 @@ class Credit(Resource):
 
     def post(self):
 
-        data = Credit.parser.parse_args() #Validacao das condicoes de entrada
-
-        #if CreditModel.find_by_id(data['id']):
-        #    return {'message': "A credit with id '{}' already exists".format(name)}, 400
-
+        data = Credit.parser.parse_args()
         
         credit = CreditModel(**data)
         try:

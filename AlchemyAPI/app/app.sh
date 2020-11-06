@@ -6,4 +6,6 @@ pip install pandas
 pip install flask-sqlalchemy
 pip install flask-jwt-extended
 pip install flask-restful
+pip install requests
+
 python -u app.py

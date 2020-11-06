@@ -32,7 +32,7 @@ class Credit:
 
     def ingest_data(self):
         print('Begin Ingestion of Data')
-        self.df_base = pd.read_csv('dags/german_credit_data.csv')
+        self.df_base = pd.read_csv('dataset.csv')
         self.df = self.df_base.iloc[:,1:]
 
     def prepare_data(self):
@@ -62,7 +62,6 @@ class Credit:
 
     def deploy(self):
         self.result = {
-            'accuracy': self.accuracy,
-            'confusion': self.confusion
+            'accuracy': self.accuracy        
         }
         print(self.result)

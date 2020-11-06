@@ -1,20 +1,16 @@
 from creditrisk import Credit
+from flask_restful import Resource, reqparse
 
-class Pipeline:
-    def create_pipeline(self):
-        self.credit_risk = Credit()
+class Pipeline(Resource):
 
-    def ingest_data(self):
-        self.credit_risk.ingest_data()
+    def get(self):
+        credit_risk = Credit()
+        credit_risk.ingest_data()
+        credit_risk.prepare_data()
+        credit_risk.train()
+        credit_risk.evaluate()
+        credit_risk.deploy()
 
-    def prepare_data(self):
-        self.credit_risk.prepare_data()
-
-    def train(self):
-        self.credit_risk.train()
-
-    def evaluate(self):
-        self.credit_risk.evaluate()
-
-    def deploy(self):
-        self.credit_risk.deploy()
+        return {
+            "results": credit_risk.result
+        }
