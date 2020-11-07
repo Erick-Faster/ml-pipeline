@@ -7,6 +7,7 @@ Created on Mon Oct 19 13:32:03 2020
 
 import pandas as pd
 import numpy as np
+from mltoolbox import extract_data
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, accuracy_score
@@ -32,7 +33,7 @@ class Credit:
 
     def ingest_data(self):
         print('Begin Ingestion of Data')
-        self.df_base = pd.read_csv('dataset.csv')
+        self.df_base = extract_data()
         self.df = self.df_base.iloc[:,1:]
 
     def prepare_data(self):
@@ -42,10 +43,10 @@ class Credit:
 
         # categorical columns
 
-        self.df = pd.get_dummies(self.df, columns=['Sex', 'Housing', 'Saving accounts', 'Checking account', 'Purpose'], drop_first=True)
+        self.df = pd.get_dummies(self.df, columns=['sex', 'housing', 'saving_accounts', 'checking_account', 'purpose'], drop_first=True)
 
-        self.X = self.df.drop(columns='Risk')
-        self.y = self.df.loc[:,'Risk']
+        self.X = self.df.drop(columns='risk')
+        self.y = self.df.loc[:,'risk']
 
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X, self.y, test_size=0.25, random_state=42)
 
