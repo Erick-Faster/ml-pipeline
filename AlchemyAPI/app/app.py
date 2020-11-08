@@ -3,7 +3,7 @@ from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from flask import jsonify
 from db import db
-import config
+from instances import config
 from resources.user import UserRegister, User, UserLogin, UserLogout, TokenRefresh
 from resources.train import Train
 from resources.credit import Credit, CreditList, CreditImport
@@ -105,4 +105,4 @@ if __name__ == '__main__': #evita que, ao importar app, nao execute novamente,
     app.app_context().push()
     db.init_app(app)
     db.create_all()
-    app.run(host='0.0.0.0', port=5000, debug=False) #debug mostra msgs de erro
+    app.run(host=config.HOST, port=config.PORT, debug=config.DEBUG) #debug mostra msgs de erro

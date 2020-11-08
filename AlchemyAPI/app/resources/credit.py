@@ -83,7 +83,7 @@ class Credit(Resource):
 
 class CreditList(Resource):
     def get(self):
-        return {'credits': [credit.json() for credit in CreditModel.find_all()]}
+        return {'data': [credit.json() for credit in CreditModel.find_all()]}
 
 class CreditImport(Resource):
     def get(self):
