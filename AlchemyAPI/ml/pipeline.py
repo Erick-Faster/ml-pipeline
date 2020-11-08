@@ -11,6 +11,4 @@ class Pipeline(Resource):
         credit_risk.evaluate()
         credit_risk.deploy()
 
-        return {
-            "results": credit_risk.result
-        }
+        return credit_risk.result
