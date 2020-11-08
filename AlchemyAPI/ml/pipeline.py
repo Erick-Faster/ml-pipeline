@@ -1,14 +1,7 @@
-from creditrisk import Credit
-from flask_restful import Resource, reqparse
+from sklearn.pipeline import Pipeline
+from processors.preprocessors import preprocessor
+from sklearn.ensemble import RandomForestClassifier
 
-class Pipeline(Resource):
-
-    def get(self):
-        credit_risk = Credit()
-        credit_risk.ingest_data()
-        credit_risk.prepare_data()
-        credit_risk.train()
-        credit_risk.evaluate()
-        credit_risk.deploy()
-
-        return credit_risk.result
+model = Pipeline(steps=[
+    ('preprocessor', preprocessor),
+    ('randomforest', RandomForestClassifier(random_state=27))])
