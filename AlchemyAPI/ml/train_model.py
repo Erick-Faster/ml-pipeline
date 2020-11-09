@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from processors.data_management import extract_data
+from processors.data_management import extract_data, upload_to_aws, save_pickle
 from sklearn.model_selection import train_test_split
 from pipeline import model
 from instances import config
@@ -18,5 +18,7 @@ class Train(Resource):
         model.fit(X_train, y_train)
 
         train_score = model.score(X_train, y_train)
+
+        save_pickle('trained_models/model.pkl', model)
 
         return {'train_score': train_score}
