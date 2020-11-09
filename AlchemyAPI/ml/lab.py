@@ -11,7 +11,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, accuracy_score
 from sklearn.pipeline import Pipeline
-from preprocessors import DataMissing
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
@@ -48,6 +47,8 @@ model = Pipeline(steps=[
 model.fit(X_train, y_train)
 
 predictions = model.predict(X_test)
+
+output = predictions[0]
 
 train_score = model.score(X_train, y_train)
 test_score = model.score(X_test, y_test)

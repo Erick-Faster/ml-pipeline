@@ -20,6 +20,7 @@ services:
         volumes:
             # Aplicacao
             - ./app:/app
+            - ./trained_models:/app/trained_models #DELETAR DEPOIS DE IMPLEMENTAR REDIS
         ports:
             - 5000:5000
         working_dir: /app #Diretorio de execucao do comando
@@ -36,6 +37,7 @@ services:
         volumes:
             # Aplicacao
             - ./ml:/ml
+            - ./trained_models:/ml/trained_models
         ports:
             - 6000:6000
         working_dir: /ml #Diretorio de execucao do comando

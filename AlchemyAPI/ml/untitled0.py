@@ -11,8 +11,8 @@ from botocore.exceptions import NoCredentialsError
 def download_from_aws(down_file, bucket, s3_file):
 
 
-    s3 = boto3.client('s3', aws_access_key_id='AKIA4FUG32ISCSDAWHYZ',
-                      aws_secret_access_key='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')
+    s3 = boto3.client('s3', aws_access_key_id='AKIA4FUG32ISMCG4QBG6',
+                      aws_secret_access_key='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')
     try:
         s3.download_file(bucket, s3_file, down_file)
         print("Download Successful")
@@ -23,6 +23,12 @@ def download_from_aws(down_file, bucket, s3_file):
     except NoCredentialsError:
         print("Credentials not avaliable")
         return False
+    
+down_file = 'Danke.jpg'
+bucket = 'fastermlpipeline'
+s3_file = 'Danke.jpg'
+
+
     
     
 def upload_to_aws(local_file, bucket, s3_file):
@@ -62,3 +68,13 @@ from datetime import datetime
 modelname = datetime.now().strftime("rf-%Y-%m-%dT%H-%M-%S-%f")
 modelname = 
 folder = "classifiers/"+foldername
+
+import pandas as pd
+
+dict.keys()
+
+dict = {'teste': 1, 'teste2': 2}
+
+df = pd.DataFrame.from_dict(dict, orient ='index')
+dados = (df.values).reshape(1,-1)
+df = pd.DataFrame(columns = df.index, data = dados)

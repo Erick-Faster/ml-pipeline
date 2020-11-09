@@ -8,8 +8,8 @@ DEBUG = False
 #AWS
 
 BUCKET = 'fastermlpipeline'
-ACCESS_KEY = 'AKIA4FUG32ISCSDAWHYZ'
-SECRET_KEY = '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'
+ACCESS_KEY = 'sorry_itsasecret'
+SECRET_KEY = 'sure_itsasecret'
 
 #Extract Data
 URL_DATA = 'http://api:5000/credits'

@@ -1,12 +1,10 @@
 from flask_restful import Resource, reqparse
-from processors.data_management import extract_data, upload_to_aws, save_pickle
-from sklearn.model_selection import train_test_split
-from pipeline import model
-from instances import config
 import pandas as pd
-from processors.data_management import load_pickle
+from instances import config
+import json
+import requests
 
-class Train(Resource):
+class Predict(Resource):
 
     parser = reqparse.RequestParser() #Condicoes de entrada
     parser.add_argument('age',
@@ -60,32 +58,21 @@ class Train(Resource):
         help="This field cannot be left blank!"
     )
 
-    def get(self):
-
-        df = extract_data(config.URL_DATA)
-
-        X_train, X_test, y_train, y_test = train_test_split(df.drop(['risk'], axis=1), 
-                                                    df['risk'], 
-                                                    test_size=0.2, 
-                                                    random_state=42)
-
-        model.fit(X_train, y_train)
-
-        train_score = model.score(X_train, y_train)
-
-        save_pickle('trained_models/model', model)
-
-        return {'train_score': train_score}
-
     def post(self):
 
-        data = Train.parser.parse_args()
+        data = Predict.parser.parse_args()
+        headers = {"Content-Type": "application/json"}
+        json_data = json.dumps(data).encode('utf8')
+        response_json = requests.post(config.URL_TRAINING, data = json_data, headers = headers)
+        response = json.loads(response_json.content)
+        output = response['output']
 
-        df = pd.DataFrame.from_dict(data, orient ='index')
-        df = pd.DataFrame(columns = df.index, data = (df.values).reshape(1,-1))
+        return {'output': output}
 
-        model = load_pickle('trained_models/model.pkl')
 
-        output = model.predict(df)
 
-        return {'output': output[0]}
+
+
+        
+
+
