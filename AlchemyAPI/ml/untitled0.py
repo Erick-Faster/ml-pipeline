@@ -41,5 +41,24 @@ def upload_to_aws(local_file, bucket, s3_file):
         print("Credentials not avaliable")
         return False
 
+
+
 download_from_aws(down_file, bucket, s3_file)
 upload_to_aws(local_file, bucket, s3_file)
+
+filepath = 'models/rf'
+
+def save_pickle(filepath, objeto, use_date=False):
+    
+    if use_date:
+        date = datetime.now().strftime("-%Y-%m-%dT%H-%M-%S-%f")
+        filepath = f'{filepath}{date}'
+    outfile = open(f'{filepath}.pkl','wb')
+    pickle.dump(objeto,outfile)
+    outfile.close()
+
+
+from datetime import datetime
+modelname = datetime.now().strftime("rf-%Y-%m-%dT%H-%M-%S-%f")
+modelname = 
+folder = "classifiers/"+foldername

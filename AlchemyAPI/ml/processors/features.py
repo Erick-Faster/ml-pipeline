@@ -19,8 +19,6 @@ class DataMissing(BaseEstimator, TransformerMixin):
         """Apply the transforms to the dataframe."""
 
         X = X.fillna(value='no_data')
-
-
         X = X.copy()
         for feature in self.variables:
             X[feature] = X[feature].fillna("Missing")

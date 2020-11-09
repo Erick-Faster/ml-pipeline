@@ -19,6 +19,6 @@ class Train(Resource):
 
         train_score = model.score(X_train, y_train)
 
-        save_pickle('trained_models/model.pkl', model)
+        save_pickle('trained_models/model', model, use_date=True)
 
         return {'train_score': train_score}

@@ -1,6 +1,7 @@
 import requests
 import json
 import pickle
+from datetime import datetime
 import pandas as pd
 from instances import config
 import boto3
@@ -55,7 +56,10 @@ def load_pickle(filename):
     infile.close()
     return objeto
 
-def save_pickle(filename, objeto):
-    outfile = open(filename,'wb')
+def save_pickle(filepath, objeto, use_date=False):
+    if use_date:
+        date = datetime.now().strftime("-%Y-%m-%dT%H-%M-%S-%f")
+        filepath = f'{filepath}{date}'
+    outfile = open(f'{filepath}.pkl','wb')
     pickle.dump(objeto,outfile)
     outfile.close()
