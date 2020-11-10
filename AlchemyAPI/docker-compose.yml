@@ -27,6 +27,7 @@ services:
         command: bash ./app.sh #add bash pra dar permissao
         networks:
             - banco
+            - api
             - training
         depends_on:
             - database #servico de banco de dados
@@ -46,5 +47,19 @@ services:
             - training
         depends_on:
             - api #servico de banco de dados
+    web:
+        container_name: web
+        image: python:3.8
+        volumes:
+            - ./web:/web
+        ports:
+            - 7860:7860
+        working_dir: /web
+        command: bash ./initialize.sh
+        networks:
+            - api
+        depends_on:
+            - api
+
 volumes:
     db_volume:

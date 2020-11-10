@@ -24,7 +24,7 @@ def predict_data(age, sex, job, housing, saving_accounts, checking_account, cred
         'risk': 'good'
     }
     
-    url = 'http://127.0.0.1:5000/predict'
+    url = 'http://api:5000/predict'
     headers = {"Content-Type": "application/json"}
     json_data = json.dumps(data).encode('utf8')
     response_json = requests.post(url, data = json_data, headers = headers)
@@ -46,5 +46,7 @@ iface = gr.Interface(
         gr.inputs.Slider(minimum=0, maximum=100, step=1, label='duration'),
         gr.inputs.Dropdown(['radio/TV', 'education', 'furniture/equipment', 'car', 'business'], label='purpose')       
     ],
-    outputs=["text"])
-iface.launch()
+    outputs=["text"],
+    server_name="0.0.0.0")
+if __name__ == '__main__':
+    iface.launch()
