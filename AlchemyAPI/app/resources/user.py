@@ -4,10 +4,9 @@ from werkzeug.security import safe_str_cmp
 from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
-    jwt_refresh_token_required,
     get_jwt_identity,
     jwt_required,
-    get_raw_jwt
+    get_jwt
 )
 
 from blacklist import BLACKLIST
@@ -74,16 +73,19 @@ class UserLogin(Resource):
 
         return {'message': 'Invalid credentials'}, 401
 
+#TODO: Importar get_raw_jwt 
 class UserLogout(Resource):
     @jwt_required
     def post(self):
-        jti = get_raw_jwt()['jti'] #jti -> id do token
+        jti = get_jwt()['jti'] #jti -> id do token
         BLACKLIST.add(jti)
         return {'message': "Successfully logged out"}
 
+#TODO: Importar @jwt_refress_token_required
 class TokenRefresh(Resource):
-    @jwt_refresh_token_required
+    @jwt_required(refresh=True)
     def post(self):
         current_user = get_jwt_identity()
         new_token = create_access_token(identity=current_user, fresh=False)
         return {'access_token': new_token}, 200
+

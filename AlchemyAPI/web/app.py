@@ -21,7 +21,6 @@ def predict_data(age, sex, job, housing, saving_accounts, checking_account, cred
         'credit_amount': credit_amount,
         'duration': duration,
         'purpose': purpose,
-        'risk': 'good'
     }
     
     url = 'http://api:5000/predict'

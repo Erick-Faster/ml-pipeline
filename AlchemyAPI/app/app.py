@@ -31,15 +31,17 @@ def create_tables():
 
 jwt = JWTManager(app) #Linka JWT ao app -> n cria /auth
 
-@jwt.user_claims_loader
+@jwt.additional_claims_loader
 def add_claims_to_jwt(identity):
     if identity == 1: #hardcode
         return {'is_admin': True}
     return {'is_admin': False}
 
+'''
 @jwt.token_in_blacklist_loader
 def check_if_token_is_blacklist(decrypted_token):
     return decrypted_token['jti'] in BLACKLIST #posso usar decrypted_token['identity'] para banir um usuario
+
 
 @jwt.expired_token_loader
 def expired_token_callback():
@@ -75,6 +77,7 @@ def revoked_token_callback():
         'description': 'The token has been revoked',
         'error': 'token_revoked'
     }), 401
+'''
 
 '''
 @jwt.auth_response_handler
